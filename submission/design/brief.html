@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FrameCheck — Submission Brief</title>
+<link rel="stylesheet" href="theme.css">
+<style>
+  @page { size: A4; margin: 0; }
+  body { background: var(--bg); }
+  .page { width: 210mm; height: 297mm; position: relative; overflow: hidden; padding: 16mm 16mm 20mm; page-break-after: always; break-after: page; }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+  .hdr { display: flex; justify-content: space-between; align-items: center; font: 500 10px "IBM Plex Mono", monospace; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-3); }
+  .hdr .brand { display: flex; align-items: center; gap: 8px; color: var(--ink-2); }
+  .hdr img { width: 18px; }
+  .ftr { position: absolute; left: 16mm; right: 16mm; bottom: 10mm; display: flex; justify-content: space-between; font: 500 9.5px "IBM Plex Mono", monospace; color: var(--ink-3); border-top: 1px solid var(--line); padding-top: 6px; }
+  h1 { font-size: 30px; line-height: 1.1; margin-top: 18px; }
+  h2 { font-size: 17px; margin-top: 18px; }
+  .crit { display: inline-block; margin-left: 8px; padding: 2px 8px; border-radius: 999px; font: 600 10px "IBM Plex Mono", monospace; letter-spacing: 1px; color: #07070e; background: var(--neon); vertical-align: 5px; }
+  p, li, td, th { font-size: 11.5px; line-height: 1.55; color: var(--ink-2); }
+  p { margin-top: 8px; }
+  b, strong { color: var(--ink); }
+  ul { margin-top: 6px; padding-left: 16px; }
+  li { margin-top: 4px; }
+  li::marker { color: var(--neon); }
+  code { font: 500 10.5px "IBM Plex Mono", monospace; color: var(--neon); }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  th { text-align: left; font: 600 9.5px "IBM Plex Mono", monospace; letter-spacing: 1px; text-transform: uppercase; color: var(--neon); border-bottom: 1px solid var(--line); padding: 6px 8px; }
+  td { padding: 6px 8px; border-bottom: 1px solid rgb(36 36 63 / 0.7); vertical-align: top; }
+  td.num { font-family: "IBM Plex Mono", monospace; color: var(--ink); white-space: nowrap; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+  .box { padding: 12px 14px; }
+  .box h3 { font-size: 13px; color: var(--ink); }
+  .shots { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+  .shots figure { margin: 0; }
+  .shots figcaption { margin-top: 6px; font-size: 10.5px; line-height: 1.45; color: var(--ink-2); }
+  .shots figcaption b { font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--neon); margin-right: 6px; }
+  .arch { margin-top: 12px; display: grid; grid-template-columns: 1fr 26px 1.25fr 26px 1fr; align-items: center; }
+  .node { padding: 10px 12px; border-radius: 12px; background: var(--panel); box-shadow: inset 0 0 0 1.5px var(--neon), 0 0 22px -10px var(--neon); }
+  .node.meta { box-shadow: inset 0 0 0 1.5px var(--magenta), 0 0 22px -10px var(--magenta); }
+  .node .t { font: 600 12px "IBM Plex Mono", monospace; color: var(--ink); }
+  .node p { margin-top: 4px; font-size: 10px; line-height: 1.4; }
+  .arrow { text-align: center; color: var(--neon); font: 600 16px "IBM Plex Mono", monospace; }
+  .kv td:first-child { width: 34%; font: 600 10px "IBM Plex Mono", monospace; letter-spacing: 1px; text-transform: uppercase; color: var(--ink-3); }
+  .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 12px; }
+  .stat { padding: 10px 12px; }
+  .stat .v { font-size: 24px; line-height: 1; }
+  .stat .l { margin-top: 5px; font-size: 10px; line-height: 1.35; color: var(--ink-2); }
+  .note { font-size: 10px; color: var(--ink-3); }
+
+  /* Cover */
+  .cover { padding: 0; }
+  .cover .bg { position: absolute; inset: 0; background: url("assets/intro-logo.jpg") center 30% / cover; opacity: 0.95; }
+  .cover .fade { position: absolute; inset: 0; background: linear-gradient(to bottom, rgb(7 7 14 / 0.1) 30%, rgb(7 7 14 / 0.92) 62%, var(--bg) 80%); }
+  .cover .content { position: absolute; left: 18mm; right: 18mm; bottom: 26mm; }
+  .cover h1 { font-size: 54px; margin: 0; }
+  .cover .tag { margin-top: 10px; font-size: 22px; color: var(--ink); }
+  .cover .tag .pink { font-style: italic; }
+  .cover .sub { margin-top: 10px; font-size: 13px; color: var(--ink-2); }
+  .cover table { margin-top: 22px; }
+</style>
+</head>
+<body>
+
+<!-- 1. Cover -->
+<section class="page cover grid-bg">
+  <div class="bg"></div><div class="fade"></div>
+  <div class="content">
+    <div class="kicker">Submission brief</div>
+    <h1 class="display" style="margin-top:10px">Frame<span class="neon">Check</span></h1>
+    <div class="tag display">Does the build <span class="pink">match</span> the design?</div>
+    <p class="sub">Visual QA for front-end builds, powered by Meta Muse Spark. Every finding comes with evidence on both images, and a person decides what is real.</p>
+    <table class="kv">
+      <tr><td>Event</td><td>Meta Global AI Developer Hackathon</td></tr>
+      <tr><td>Track · theme</td><td>Indie Developer · Build for Your World</td></tr>
+      <tr><td>Meta AI used</td><td>Muse Spark (<code>muse-spark-1.3</code>) through the Meta Model API</td></tr>
+      <tr><td>Source code</td><td><code>github.com/fadillaoegi/frameCheck-meta</code> · MIT licence</td></tr>
+      <tr><td>Demo video</td><td>2:32, live Muse Spark run, linked in the submission form and the repository README</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 2. Summary + Impact -->
+<section class="page grid-bg">
+  <div class="hdr"><span class="brand"><img src="assets/framecheck-mark-neon.svg" alt="">FrameCheck</span><span>Summary · Impact</span></div>
+  <h1 class="display">At a glance</h1>
+  <p>FrameCheck compares a <b>design export</b> with a <b>screenshot of the build</b>. One Muse Spark request returns findings in three categories: <b style="color:var(--missing)">missing element</b>, <b style="color:var(--clipped)">clipped text</b> and <b style="color:var(--layout)">layout mismatch</b>. Each finding carries a summary, a check step, and a box on the design, the build, or both. The developer reviews every finding, accepting or rejecting it with a reason, and exports the reviewed run as Markdown for a pull request or JSON for tooling.</p>
+
+  <h2 class="display">The problem <span class="crit">Impact · 30%</span></h2>
+  <p>Front-end developers check their work by flipping between a Figma export and a browser window. Small defects slip through: a button that never rendered, a headline cut off by <code>overflow: hidden</code>, a card that dropped thirty pixels. Pixel-diff tools flag every anti-aliasing and compression change and cannot say <i>what</i> went wrong, so reviewers stop reading them. On our holdout page, a pixel diff found 1 of 12 defects and raised 5 false alarms on a JPEG copy of an unchanged page.</p>
+
+  <div class="cols">
+    <div class="box panel"><h3>Who benefits</h3>
+      <ul>
+        <li><b>Front-end developers</b> catch visual regressions before opening a pull request.</li>
+        <li><b>Reviewers and QA</b> get findings with evidence instead of a vague "looks off".</li>
+        <li><b>Designers</b> check fidelity without walking through every screen by hand.</li>
+        <li><b>Small teams and freelancers</b> without a dedicated QA person.</li>
+      </ul></div>
+    <div class="box panel"><h3>Why it can become a tool people use</h3>
+      <ul>
+        <li>Works with <b>any</b> screenshot pair: no SDK, no framework lock-in.</li>
+        <li>Fits the existing workflow: the Markdown export pastes straight into a PR.</li>
+        <li><b>Human in the loop</b> by design: nothing counts until a person decides.</li>
+        <li>Honest about uncertainty: an empty result is not a sign-off, and mock or fixture output is never shown as AI output.</li>
+      </ul></div>
+  </div>
+
+  <h2 class="display">Where to find each judging criterion</h2>
+  <table>
+    <tr><th>Criterion (weight)</th><th>Evidence in this submission</th><th>Page</th></tr>
+    <tr><td><b>Impact</b> (30%)</td><td>Problem, users and workflow fit; built from the author's own day-to-day front-end work</td><td class="num">2</td></tr>
+    <tr><td><b>Use of Meta AI Tooling</b> (25%)</td><td>Structured multi-image grounding with Muse Spark, a coordinate contract, evidence validation, guard rails</td><td class="num">4</td></tr>
+    <tr><td><b>Technical Depth &amp; Execution</b> (20%)</td><td>Architecture, run lifecycle, tests, deterministic evaluation harness with a holdout set</td><td class="num">5</td></tr>
+    <tr><td><b>Demo</b> (25%)</td><td>2:32 video with a live Muse Spark run; live results table; run-it-yourself instructions</td><td class="num">3, 6</td></tr>
+  </table>
+  <div class="ftr"><span>FrameCheck · Submission brief</span><span>2 / 7</span></div>
+</section>
+
+<!-- 3. Walkthrough -->
+<section class="page grid-bg">
+  <div class="hdr"><span class="brand"><img src="assets/framecheck-mark-neon.svg" alt="">FrameCheck</span><span>Product walkthrough</span></div>
+  <h1 class="display">The product, in six frames <span class="crit">Demo · 25%</span></h1>
+  <p>All frames come from the demo recording of the running app, on an original checkout design ("Kopiku") with three injected defects. The run shown is a real Muse Spark request.</p>
+  <div class="shots">
+    <figure><img class="shot" src="assets/shot-upload.jpg" alt=""><figcaption><b>1 · Upload</b>Design and build dropped in; FrameCheck reads the image size and suggests the pixel ratio so both line up.</figcaption></figure>
+    <figure><img class="shot" src="assets/shot-results.jpg" alt=""><figcaption><b>2 · Analyse</b>One Muse Spark request. The run shows its origin, model, latency and tokens; three findings arrive with boxes.</figcaption></figure>
+    <figure><img class="shot" src="assets/shot-finding1.jpg" alt=""><figcaption><b>3 · Review</b>A finding zooms both images to the same window. A missing element is drawn as a dashed ghost where it should be.</figcaption></figure>
+    <figure><img class="shot" src="assets/shot-swipe.jpg" alt=""><figcaption><b>4 · Swipe</b>A divider wipes between design and build at the same position: changes jump out as it passes.</figcaption></figure>
+    <figure><img class="shot" src="assets/shot-layers.jpg" alt=""><figcaption><b>5 · Layers 3D</b>The build floats above the design; flatten it into a 50% overlay or turn the stack and follow a finding's post.</figcaption></figure>
+    <figure><img class="shot" src="assets/shot-export.jpg" alt=""><figcaption><b>6 · Export</b>Markdown report with origin, model, tokens, input fingerprint, evidence and every human decision.</figcaption></figure>
+  </div>
+  <div class="ftr"><span>FrameCheck · Submission brief</span><span>3 / 7</span></div>
+</section>
+
+<!-- 4. Use of Meta AI -->
+<section class="page grid-bg">
+  <div class="hdr"><span class="brand"><img src="assets/framecheck-mark-neon.svg" alt="">FrameCheck</span><span>Use of Meta AI tooling</span></div>
+  <h1 class="display">How Muse Spark is used <span class="crit" style="background:var(--magenta)">Tooling · 25%</span></h1>
+  <p>FrameCheck asks Muse Spark to do what a careful reviewer does: look at two images, name what differs, and <b>point at it on each image</b>. Most of the work went into making that answer checkable.</p>
+  <table>
+    <tr><th style="width:28%">Part</th><th>What FrameCheck does</th></tr>
+    <tr><td><b>Request</b></td><td><code>POST /v1/responses</code>, model <code>muse-spark-1.3</code>, both images as data URLs in one message, temperature 0, <code>store: false</code>.</td></tr>
+    <tr><td><b>Structured output</b></td><td>Strict <code>json_schema</code>: <code>findings[]</code> with category, summary, check step and a box per image, plus <code>inspected_both_images</code>. Off-schema output fails the run (<code>INVALID_OUTPUT</code>); there is no free-text parsing.</td></tr>
+    <tr><td><b>Grounding on two images</b></td><td>The model answers on a 0–1000 grid of the image it saw. Large screenshots are area-averaged down to a maximum side; the crop and scale are stored with the run and boxes are mapped back to original pixels (floor for minimum, ceil for maximum).</td></tr>
+    <tr><td><b>Untrusted output</b></td><td>Each finding is checked against its category's evidence rules (missing: design box only; clipped and layout: both boxes). Rule breaks are kept but flagged "check evidence"; boxes are clamped and findings capped.</td></tr>
+    <tr><td><b>Prompt safety</b></td><td>The developer's notes go in a delimited block whose delimiter is escaped; they add context but cannot change the rules or schema.</td></tr>
+    <tr><td><b>Cost guard rails</b></td><td>Per-process request cap, input fingerprint with duplicate-run detection, idempotency keys, input/output tokens stored on every run, safe error codes that never echo the key or body.</td></tr>
+    <tr><td><b>Honest origins</b></td><td>Every run records <code>meta_api</code>, <code>fixture</code> or <code>mock</code>, and the UI and export show it.</td></tr>
+  </table>
+  <h2 class="display">Capabilities we did not expect</h2>
+  <ul>
+    <li><b>Pixel-accurate grounding across two images in one call:</b> boxes overlap the injected regions at IoU 0.92–0.96.</li>
+    <li><b>Telling absence from truncation:</b> a removed promo row is reported as missing with no build box; a cut title is reported as clipped with the full text on the design and the remaining text on the build.</li>
+    <li><b>Following context:</b> told that grey boxes hide personal data and a clock ticks, it ignored both and reported only the real defects.</li>
+  </ul>
+  <div class="ftr"><span>FrameCheck · Submission brief</span><span>4 / 7</span></div>
+</section>
+
+<!-- 5. Technical depth -->
+<section class="page grid-bg">
+  <div class="hdr"><span class="brand"><img src="assets/framecheck-mark-neon.svg" alt="">FrameCheck</span><span>Technical depth</span></div>
+  <h1 class="display">Engineering <span class="crit" style="background:var(--build)">Execution · 20%</span></h1>
+  <div class="arch">
+    <div class="node"><div class="t">Web app</div><p>React 19 · TypeScript · Vite · Tailwind 4. Evidence overlays, swipe, CSS 3D layers, review, export.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="t">Go API + worker</div><p>Clean Architecture: domain → application → ports → adapters. Upload validation, run queue, evidence rules, export.</p></div>
+    <div class="arrow">→</div>
+    <div class="node meta"><div class="t">Meta Model API</div><p>Muse Spark via <code>/v1/responses</code>, strict JSON schema, two images per request.</p></div>
+  </div>
+  <div class="arch" style="grid-template-columns:1fr 26px 1.25fr 26px 1fr;margin-top:8px">
+    <div></div><div></div>
+    <div class="node" style="box-shadow: inset 0 0 0 1px var(--line)"><div class="t">PostgreSQL 16 + image store</div><p>Embedded migrations; content-addressed images; projects, assets, comparisons, runs, findings, reviews.</p></div>
+    <div></div><div></div>
+  </div>
+  <div class="cols">
+    <div class="box panel"><h3>Correctness by construction</h3>
+      <ul>
+        <li>Uploads: real type sniffed from bytes, 10 MB and 8000 px limits, full decode.</li>
+        <li>Pairs must share viewport, pixel ratio and page state.</li>
+        <li>Runs: input fingerprint, idempotency keys, one active run per project (partial unique index), sequential worker, recovery of interrupted runs.</li>
+        <li>Reviews are append-only history; rejecting needs a reason.</li>
+      </ul></div>
+    <div class="box panel"><h3>Tests and evaluation</h3>
+      <ul>
+        <li>Go tests for domain rules, the application layer (in-memory repository), providers and the scorer; the Meta adapter is tested against a local fake server only.</li>
+        <li>Frontend unit tests for coordinate and review rules.</li>
+        <li>Fixtures rendered by headless Chrome; ground truth from the DOM; each capture checked for determinism and for changes staying inside the labelled component.</li>
+        <li>Separate holdout page (new layout, fonts, viewport, a JPEG control) scored only with a frozen prompt.</li>
+      </ul></div>
+  </div>
+  <h2 class="display">Craft details</h2>
+  <ul>
+    <li>Every 3D view, the logo, the intro and outro animations, the chapter cards and all music and sound effects are generated from code in the repository.</li>
+    <li>The demo recording is driven by a scripted browser with a visible, human-paced cursor; the model wait is sped up and labelled.</li>
+  </ul>
+  <div class="ftr"><span>FrameCheck · Submission brief</span><span>5 / 7</span></div>
+</section>
+
+<!-- 6. Results + demo -->
+<section class="page grid-bg">
+  <div class="hdr"><span class="brand"><img src="assets/framecheck-mark-neon.svg" alt="">FrameCheck</span><span>Results · Demo</span></div>
+  <h1 class="display">Does it work? <span class="crit">Demo · 25%</span></h1>
+  <div class="stat-row">
+    <div class="stat panel glow"><div class="v display neon">12 / 12</div><div class="l">injected defects found across 4 live Muse Spark runs</div></div>
+    <div class="stat panel"><div class="v display pink">0</div><div class="l">false positives in those runs</div></div>
+    <div class="stat panel"><div class="v display" style="color:var(--build)">11–14 s</div><div class="l">per analysis, one request with two images</div></div>
+    <div class="stat panel"><div class="v display" style="color:var(--clipped)">0.92–0.96</div><div class="l">box IoU on missing and layout findings</div></div>
+  </div>
+  <table>
+    <tr><th>Image pair</th><th>Run</th><th>Defects found</th><th>False pos.</th><th>Latency</th><th>Tokens in / out</th></tr>
+    <tr><td>Real web-app dashboard, personal data redacted (not published)</td><td>single run</td><td class="num">3 / 3</td><td class="num">0</td><td class="num">13.0 s</td><td class="num">5,225 / 1,745</td></tr>
+    <tr><td>"Kopiku" checkout (original design)</td><td>pre-check</td><td class="num">3 / 3</td><td class="num">0</td><td class="num">11.3 s</td><td class="num">3,650 / 2,632</td></tr>
+    <tr><td>"Kopiku" checkout</td><td>recording take 1</td><td class="num">3 / 3</td><td class="num">0</td><td class="num">14.1 s</td><td class="num">3,659 / 2,575</td></tr>
+    <tr><td>"Kopiku" checkout</td><td>recording take 2 (in the video)</td><td class="num">3 / 3</td><td class="num">0</td><td class="num">13.8 s</td><td class="num">3,659 / 2,481</td></tr>
+  </table>
+  <p class="note">Each pair has one missing element, one clipped text and one layout mismatch, injected on purpose. Four runs on two pairs show the pipeline works end to end; they are not a benchmark.</p>
+
+  <h2 class="display">Benchmark sets and baselines</h2>
+  <table>
+    <tr><th>Set</th><th>Origin</th><th>Recall</th><th>Precision</th><th>Control false positives</th></tr>
+    <tr><td>Dev: 12 defects + 1 control (1280×800)</td><td>mock pixel diff</td><td class="num">2 / 12</td><td class="num">2 / 13</td><td class="num">0</td></tr>
+    <tr><td>Holdout: 12 defects + 2 controls (1440×900)</td><td>mock pixel diff</td><td class="num">1 / 12</td><td class="num">1 / 18</td><td class="num">5</td></tr>
+    <tr><td>Dev and holdout</td><td>fixture (pipeline check)</td><td class="num">12 / 12</td><td class="num">12 / 12</td><td class="num">0</td></tr>
+    <tr><td>Dev and holdout</td><td>Muse Spark</td><td class="num" colspan="3">to be run with a frozen prompt</td></tr>
+  </table>
+
+  <h2 class="display">The demo video (2:32)</h2>
+  <p>3D intro → landing page → <b>01 Upload &amp; pair</b> → <b>02 Analyse with Muse Spark</b> (live request) → <b>03 Review every finding</b> → <b>04 Compare in Swipe &amp; 3D</b> → <b>05 Export the report</b> → 3D closing. Voice-over, burned-in captions and on-screen notes explain each step.</p>
+  <h2 class="display">Run it yourself</h2>
+  <p><code>docker compose --project-name framecheck up -d postgres</code> · <code>cd framecheck_BE &amp;&amp; go run ./cmd/api</code> · <code>cd framecheck_FE &amp;&amp; pnpm install &amp;&amp; pnpm dev</code> → open <code>127.0.0.1:5181</code> and press <b>Try it with a sample</b>. Without a Meta key the offline mock provider is used; set <code>FRAMECHECK_PROVIDER=meta</code> and a key in <code>.env</code> to use Muse Spark.</p>
+  <div class="ftr"><span>FrameCheck · Submission brief</span><span>6 / 7</span></div>
+</section>
+
+<!-- 7. Originality, limits, roadmap -->
+<section class="page grid-bg">
+  <div class="hdr"><span class="brand"><img src="assets/framecheck-mark-neon.svg" alt="">FrameCheck</span><span>Originality · Limits · Next</span></div>
+  <h1 class="display">Originality and compliance</h1>
+  <ul>
+    <li><b>Built during the hackathon:</b> planning notes on 22 October 2026; code written from 27 October, after the 26 October kickoff. The progress log in <code>docs/PROGRESS.md</code> records each step.</li>
+    <li><b>Original work:</b> the demo pages "Lembar" and "Kopiku" and all test images are self-made; the logo, animations, music and sound effects are generated from code in the repository. No third-party designs are used.</li>
+    <li><b>Open source, licences followed:</b> pgx, chromedp, cdproto (MIT); google/uuid (BSD-3-Clause); React, Vite, Tailwind CSS, Vitest (MIT); TypeScript (Apache-2.0); fonts under the SIL Open Font License; PostgreSQL licence. FrameCheck itself is MIT licensed.</li>
+    <li><b>Privacy:</b> the only real-world screenshot was redacted with identical boxes before it was sent, and it is not published. The API key lives only in the server's <code>.env</code>, never in the browser, logs or repository.</li>
+  </ul>
+
+  <h2 class="display">Known limitations</h2>
+  <ul>
+    <li>Three categories only. Colour, font rendering and wording are not judged on their own; an empty result is not a sign-off.</li>
+    <li>Both images must be captured the same way; mismatched screenshots are not aligned or rescaled automatically.</li>
+    <li>Content that changes between captures (clocks, captchas, live data) appears as a difference unless the notes say to ignore it.</li>
+    <li>Accuracy on varied real-world pages still needs the full benchmark.</li>
+  </ul>
+
+  <h2 class="display">Next steps</h2>
+  <div class="cols">
+    <div class="box panel"><h3>Model</h3><ul>
+      <li>Run the dev and holdout benchmark with a frozen prompt and publish the numbers.</li>
+      <li>A second Muse Spark pass that re-checks each finding on a zoomed crop to cut false positives.</li>
+      <li>SAM 3 masks to tighten boxes to the element's exact outline.</li></ul></div>
+    <div class="box panel"><h3>Product</h3><ul>
+      <li>A CI action that captures pages and comments FrameCheck findings on pull requests.</li>
+      <li>Multiple viewports per page (mobile, tablet, desktop) in one comparison.</li>
+      <li>A Figma plugin that exports frames with their capture settings.</li></ul></div>
+  </div>
+
+  <div class="panel glow" style="margin-top:22px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center">
+    <div><div class="kicker">Source code</div><div class="mono" style="margin-top:6px;font-size:15px;color:var(--ink)">github.com/fadillaoegi/frameCheck-meta</div></div>
+    <img src="assets/framecheck-mark-neon.svg" alt="" style="width:54px">
+  </div>
+  <div class="ftr"><span>FrameCheck · Submission brief</span><span>7 / 7</span></div>
+</section>
+
+</body>
+</html>

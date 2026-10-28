@@ -12,6 +12,7 @@ Rules summary: [docs/RULES-AND-ACCESS.md](../docs/RULES-AND-ACCESS.md).
 | `video/framecheck-screen-recording.mp4` | The screen recording alone (1:58, silent) | Done |
 | `VOICEOVER.md` | Timed English voice-over script; `video/build/framecheck-demo-guide-tts.mp4` has a TTS guide track for timing only | Done |
 | `video/` | 3D intro and closing animations with generated sound, plus their source | Done |
+| `design/` | Submission brief PDF (7 pages, by judging criterion), poster (PNG + A3 PDF), YouTube thumbnail, in the app's neon theme | Done |
 | `screenshots/` | UI screenshots of the self-made demo page (fixture runs, labelled) | Done; retake with Muse Spark runs after the evaluation |
 | `DEMO-SCRIPT.md` | The original shot plan (superseded by the recording and `VOICEOVER.md`) | Reference |
 

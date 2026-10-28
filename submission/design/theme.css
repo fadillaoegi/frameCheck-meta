@@ -1,0 +1,62 @@
+/* FrameCheck print/marketing theme: the app's dark neon look. */
+@import url("https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,600;0,700;1,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=block");
+
+:root {
+  --bg: #07070e;
+  --panel: #0d0d1a;
+  --panel-2: #121222;
+  --ink: #ecebff;
+  --ink-2: #b6b4dc;
+  --ink-3: #7c7aa8;
+  --line: #24243f;
+  --neon: #00f0ff;
+  --magenta: #ff2bd6;
+  --build: #3dff9e;
+  --missing: #ff2e63;
+  --clipped: #ffb627;
+  --layout: #b46bff;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { background: var(--bg); color: var(--ink); font-family: "IBM Plex Sans", sans-serif; }
+
+.grid-bg {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(60rem 40rem at 0% 0%, rgb(255 43 214 / 0.16), transparent 60%),
+    radial-gradient(60rem 40rem at 100% 100%, rgb(0 240 255 / 0.14), transparent 60%),
+    linear-gradient(to right, rgb(0 240 255 / 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(0 240 255 / 0.08) 1px, transparent 1px),
+    linear-gradient(to right, rgb(0 240 255 / 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(0 240 255 / 0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px, 8px 8px, 8px 8px;
+}
+
+.display { font-family: "Chakra Petch", sans-serif; font-weight: 600; letter-spacing: 0.3px; }
+.mono { font-family: "IBM Plex Mono", monospace; }
+.kicker { font-family: "IBM Plex Mono", monospace; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--neon); }
+.neon { color: var(--neon); text-shadow: 0 0 18px rgb(0 240 255 / 0.7); }
+.pink { color: var(--magenta); text-shadow: 0 0 18px rgb(255 43 214 / 0.7); }
+
+.panel {
+  background: rgb(13 13 26 / 0.92);
+  border-radius: 16px;
+  box-shadow: inset 0 0 0 1px var(--line), 0 18px 40px -18px rgb(0 0 0 / 0.9);
+}
+.panel.glow { box-shadow: inset 0 0 0 1.5px var(--neon), 0 0 40px -12px var(--neon); }
+
+.chip {
+  display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px;
+  font: 600 13px "IBM Plex Mono", monospace; letter-spacing: 0.5px;
+  background: rgb(13 13 26 / 0.92); box-shadow: inset 0 0 0 1.5px currentColor, 0 0 18px -6px currentColor;
+}
+.chip i { width: 9px; height: 9px; border-radius: 50%; background: currentColor; box-shadow: 0 0 8px currentColor; }
+
+.shot { display: block; width: 100%; border-radius: 10px; box-shadow: 0 0 0 1px rgb(0 240 255 / 0.35), 0 30px 60px -25px rgb(0 0 0 / 0.95); }
+
+/* Printer's crop marks, the app's motif. */
+.marks { position: relative; }
+.marks::before, .marks::after { content: ""; position: absolute; width: 14px; height: 14px; border-color: rgb(0 240 255 / 0.7); border-style: solid; }
+.marks::before { left: -10px; top: -10px; border-width: 1.5px 0 0 1.5px; }
+.marks::after { right: -10px; bottom: -10px; border-width: 0 1.5px 1.5px 0; }

@@ -9,6 +9,8 @@ Visual QA for front-end builds, powered by Meta Muse Spark. Every finding comes 
 
 <p align="center">Meta Global AI Developer Hackathon · Indie Developer track · Theme: Build for Your World</p>
 
+<p align="center"><b>▶ Demo video (2:32):</b> <i>link coming soon</i></p>
+
 ![Reviewing a missing-element finding](submission/screenshots/02-review-missing.png)
 
 ## The problem
@@ -117,7 +119,7 @@ Details: [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md).
 
 ## Built during the hackathon
 
-Planning documents were written on 22 October 2026; the code was written from 27 October, after the 26 October kickoff. The progress log records each step. The demo page "Lembar" and all test images in this repository are original and self-made. The intro and outro videos in `submission/video/` and all their sound are generated from code in this repository.
+Planning documents were written on 22 October 2026; the code was written from 27 October, after the 26 October kickoff. The progress log records each step. The demo pages "Lembar" and "Kopiku" and all test images in this repository are original and self-made. The demo video's 3D animation, chapter cards, captions and all music and sound effects are generated from code in `submission/video/src/` (video files are not stored in the repository; see `submission/video/README.md` to rebuild them).
 
 ## Third-party software
 

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FrameCheck poster</title>
+<link rel="stylesheet" href="theme.css">
+<style>
+  @page { size: 297mm 420mm; margin: 0; }
+  /* 1240 px wide layout scaled to exactly A3 (297 mm = 1122.5 CSS px). */
+  @media print { body { zoom: 0.9052; } }
+  body { width: 1240px; height: 1754px; overflow: hidden; position: relative; padding: 70px 76px; }
+  .top { display: flex; justify-content: space-between; align-items: center; }
+  .logo { display: flex; align-items: center; gap: 16px; font-size: 40px; }
+  .logo img { width: 64px; }
+  .event { text-align: right; }
+  .event .kicker { font-size: 14px; }
+  .event div:last-child { margin-top: 6px; font: 500 16px "IBM Plex Mono", monospace; color: var(--ink-2); }
+
+  h1 { margin-top: 48px; font-size: 90px; line-height: 0.96; text-transform: uppercase; }
+  h1 .pink { font-style: italic; }
+  .lede { margin-top: 20px; width: 1060px; font-size: 22px; line-height: 1.45; color: var(--ink-2); }
+  .lede b { color: var(--ink); }
+
+  .hero { position: relative; height: 470px; margin-top: 18px; perspective: 1700px; }
+  .layer { position: absolute; left: 330px; width: 540px; transform-style: preserve-3d; }
+  .layer img { width: 100%; display: block; border-radius: 10px; }
+  .l1 { top: 118px; transform: rotateX(54deg) rotateZ(-30deg); filter: brightness(0.82); }
+  .l2 { top: -10px; transform: rotateX(54deg) rotateZ(-30deg) translateZ(40px); }
+  .l1 img { box-shadow: 0 0 0 3px var(--neon), 0 0 60px -6px var(--neon); }
+  .l2 img { box-shadow: 0 0 0 3px var(--build), 0 0 60px -6px var(--build); }
+  .tag { position: absolute; left: 0; top: -38px; padding: 6px 14px; border-radius: 9px 9px 0 0; font: 700 17px "IBM Plex Mono", monospace; letter-spacing: 3px; color: #07070e; }
+  .box { position: absolute; border-radius: 3px; border: 3px solid; }
+  .ghost { border-style: dashed; }
+  .callout { position: absolute; padding: 12px 16px; border-radius: 12px; width: 250px; font-size: 16px; line-height: 1.35; }
+  .callout b { display: block; font: 600 13px "IBM Plex Mono", monospace; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+
+  .section-title { margin-top: 18px; display: flex; align-items: baseline; gap: 14px; }
+  .section-title h2 { font-size: 34px; }
+  .steps { margin-top: 18px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+  .step { padding: 18px 16px; }
+  .step .n { font-size: 40px; line-height: 1; color: rgb(0 240 255 / 0.55); }
+  .step h3 { margin-top: 10px; font-size: 19px; }
+  .step p { margin-top: 6px; font-size: 14px; line-height: 1.4; color: var(--ink-2); }
+
+  .two { margin-top: 20px; display: grid; grid-template-columns: 1.15fr 1fr; gap: 20px; }
+  .card { padding: 22px 26px; }
+  .card h2 { font-size: 28px; }
+  .card ul { margin-top: 10px; list-style: none; display: grid; gap: 7px; }
+  .card li { font-size: 16px; line-height: 1.4; color: var(--ink-2); padding-left: 22px; position: relative; }
+  .card li::before { content: "▸"; position: absolute; left: 0; color: var(--neon); }
+  .card li b { color: var(--ink); }
+  .stats { margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .stat { padding: 14px 16px; border-radius: 12px; background: var(--panel-2); box-shadow: inset 0 0 0 1px var(--line); }
+  .stat .v { font-size: 38px; line-height: 1; }
+  .stat .l { margin-top: 6px; font-size: 14px; color: var(--ink-2); line-height: 1.35; }
+  .fine { margin-top: 12px; font-size: 12.5px; color: var(--ink-3); line-height: 1.45; }
+
+  .cats { margin-top: 16px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .cats .chip { font-size: 15px; padding: 8px 14px; }
+
+  .foot { position: absolute; left: 76px; right: 76px; bottom: 40px; display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid var(--line); padding-top: 14px; }
+  .foot .mono { font-size: 16px; color: var(--ink-2); }
+  .foot .url { font: 600 22px "IBM Plex Mono", monospace; color: var(--neon); }
+</style>
+</head>
+<body class="grid-bg">
+  <div class="top">
+    <div class="logo display"><img src="assets/framecheck-mark-neon.svg" alt=""><span>Frame<span class="neon">Check</span></span></div>
+    <div class="event"><div class="kicker">Meta Global AI Developer Hackathon</div><div>Indie Developer track · Build for Your World</div></div>
+  </div>
+
+  <h1 class="display">Does the build<br><span class="pink">match</span> the design?</h1>
+  <p class="lede">FrameCheck lays a screenshot of the build over the design export and asks <b>Meta Muse Spark</b> what went wrong: elements that went missing, text that got cut off, things that moved. Every finding comes with <b>a box on both images</b>, and <b>a person decides</b> what is real.</p>
+
+  <div class="hero">
+    <div class="layer l1"><span class="tag" style="background: var(--neon)">DESIGN</span><img src="assets/kopiku-design.png" alt="">
+      <span class="box" style="left:67.1%;top:42.6%;width:26.4%;height:5.6%;border-color:var(--missing);box-shadow:0 0 18px var(--missing)"></span>
+      <span class="box" style="left:12.5%;top:26.9%;width:29.2%;height:2.7%;border-color:var(--clipped);box-shadow:0 0 18px var(--clipped)"></span>
+      <span class="box" style="left:67.1%;top:73.1%;width:26.4%;height:6.9%;border-color:var(--layout);box-shadow:0 0 18px var(--layout)"></span>
+    </div>
+    <div class="layer l2"><span class="tag" style="background: var(--build)">BUILD</span><img src="assets/kopiku-build.png" alt="">
+      <span class="box ghost" style="left:67.1%;top:42.6%;width:26.4%;height:5.6%;border-color:var(--missing);background:rgb(255 46 99/.12)"></span>
+      <span class="box" style="left:12.5%;top:26.9%;width:14.6%;height:2.7%;border-color:var(--clipped);box-shadow:0 0 18px var(--clipped)"></span>
+      <span class="box" style="left:67.1%;top:73.1%;width:18.1%;height:6.9%;border-color:var(--layout);box-shadow:0 0 18px var(--layout)"></span>
+    </div>
+    <div class="callout panel" style="left:0;top:20px;box-shadow:inset 0 0 0 1.5px var(--missing),0 0 30px -8px var(--missing)"><b style="color:var(--missing)">Missing element</b>The promo code row is in the design, gone from the build.</div>
+    <div class="callout panel" style="left:0;top:170px;box-shadow:inset 0 0 0 1.5px var(--clipped),0 0 30px -8px var(--clipped)"><b style="color:var(--clipped)">Clipped text</b>The first product title is cut off.</div>
+    <div class="callout panel" style="right:0;top:290px;box-shadow:inset 0 0 0 1.5px var(--layout),0 0 30px -8px var(--layout)"><b style="color:var(--layout)">Layout mismatch</b>The pay button is narrower than designed.</div>
+  </div>
+
+  <div class="section-title"><span class="kicker">How it works</span><h2 class="display">Five steps, one screen each</h2></div>
+  <div class="steps">
+    <div class="step panel"><div class="n display">01</div><h3>Capture</h3><p>Design export and build screenshot at the same viewport and pixel ratio.</p></div>
+    <div class="step panel"><div class="n display">02</div><h3>Pair</h3><p>Upload both, add a note on what matters on the page.</p></div>
+    <div class="step panel glow"><div class="n display">03</div><h3>Analyse</h3><p>One Muse Spark request with both images returns structured findings.</p></div>
+    <div class="step panel"><div class="n display">04</div><h3>Review</h3><p>Zoom both images to the same spot; accept, or reject with a reason.</p></div>
+    <div class="step panel"><div class="n display">05</div><h3>Export</h3><p>Markdown for the pull request, JSON for your tools.</p></div>
+  </div>
+
+  <div class="two">
+    <div class="card panel">
+      <span class="kicker">Built on Meta Muse Spark</span>
+      <h2 class="display" style="margin-top:8px">Model output you can check</h2>
+      <ul>
+        <li><b>Strict JSON schema</b> output: category, summary, check step, a box per image.</li>
+        <li><b>Coordinate contract:</b> the model's 0–1000 grid is mapped back to original pixels.</li>
+        <li><b>Untrusted by default:</b> each finding is checked against its category's evidence rules.</li>
+        <li><b>Prompt-safe notes</b>, a request cap, duplicate detection and token accounting.</li>
+        <li><b>Honest origins:</b> Muse Spark, fixture and mock runs are always labelled.</li>
+      </ul>
+    </div>
+    <div class="card panel glow">
+      <span class="kicker">Live results so far</span>
+      <h2 class="display" style="margin-top:8px">Real runs, injected defects</h2>
+      <div class="stats">
+        <div class="stat"><div class="v display neon">12 / 12</div><div class="l">injected defects found in 4 live Muse Spark runs</div></div>
+        <div class="stat"><div class="v display pink">0</div><div class="l">false positives in those runs</div></div>
+        <div class="stat"><div class="v display" style="color:var(--build)">≈ 13 s</div><div class="l">per analysis, one request, two images</div></div>
+        <div class="stat"><div class="v display" style="color:var(--clipped)">0.92–0.96</div><div class="l">box overlap (IoU) on missing and layout findings</div></div>
+      </div>
+      <p class="fine">4 runs on 2 image pairs with 3 known defects each. The benchmark on the 27 labelled dev and holdout pairs is still to run.</p>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div><div class="mono">Go · PostgreSQL · React · Meta Model API</div><div class="mono" style="margin-top:6px">MIT licensed · original work</div></div>
+    <div style="text-align:right"><div class="kicker">Source</div><div class="url">github.com/fadillaoegi/frameCheck-meta</div></div>
+  </div>
+</body>
+</html>
