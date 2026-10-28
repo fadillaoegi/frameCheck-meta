@@ -1,6 +1,8 @@
 # Submission materials
 
 Material for the Meta Global AI Developer Hackathon submission (Indie track).
+
+**Demo video:** https://youtu.be/gOiJNACygG0 · **Source:** https://github.com/fadillaoegi/frameCheck-meta
 Rules summary: [docs/RULES-AND-ACCESS.md](../docs/RULES-AND-ACCESS.md).
 
 | Path | Contents | Status |

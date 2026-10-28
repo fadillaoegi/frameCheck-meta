@@ -9,7 +9,8 @@ Visual QA for front-end builds, powered by Meta Muse Spark. Every finding comes 
 
 <p align="center">Meta Global AI Developer Hackathon · Indie Developer track · Theme: Build for Your World</p>
 
-<p align="center"><b>▶ Demo video (2:32):</b> <i>link coming soon</i></p>
+<p align="center"><a href="https://youtu.be/gOiJNACygG0"><img src="submission/design/framecheck-youtube-thumbnail.png" width="720" alt="Watch the FrameCheck demo video"></a><br>
+<b>▶ <a href="https://youtu.be/gOiJNACygG0">Watch the demo video (2:32)</a></b> · live Muse Spark run, voice-over and captions</p>
 
 ![Reviewing a missing-element finding](submission/screenshots/02-review-missing.png)
 
