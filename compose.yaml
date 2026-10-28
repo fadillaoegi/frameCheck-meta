@@ -1,0 +1,22 @@
+name: framecheck
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: framecheck
+      POSTGRES_USER: framecheck
+      POSTGRES_PASSWORD: ${FRAMECHECK_DB_PASSWORD:?Set a local FRAMECHECK_DB_PASSWORD in .env}
+    ports:
+      - "127.0.0.1:${FRAMECHECK_DB_PORT:-5440}:5432"
+    volumes:
+      - framecheck_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U framecheck -d framecheck"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    mem_limit: 384m
+
+volumes:
+  framecheck_pg_data:

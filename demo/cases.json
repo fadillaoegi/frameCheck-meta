@@ -1,0 +1,117 @@
+{
+  "about": "Development fixture set for FrameCheck. One deterministic page, one defect per case. Ground truth boxes are measured from the rendered DOM by tools/cmd/capture; do not edit them by hand. A separate holdout set must be built before any prompt tuning.",
+  "page": "site/index.html",
+  "capture": {
+    "viewport_width_css": 1280,
+    "viewport_height_css": 800,
+    "device_pixel_ratio": 1,
+    "content_state_key": "default"
+  },
+  "cases": [
+    {
+      "id": "control-unchanged",
+      "variant": "reference",
+      "split": "dev",
+      "category": null,
+      "component": null,
+      "decidable": true,
+      "note": "Identical capture. Any finding is a false positive."
+    },
+    {
+      "id": "missing-hero-cta",
+      "variant": "missing-hero-cta",
+      "split": "dev",
+      "category": "missing_element",
+      "component": "hero-cta",
+      "decidable": true
+    },
+    {
+      "id": "missing-signin",
+      "variant": "missing-signin",
+      "split": "dev",
+      "category": "missing_element",
+      "component": "signin",
+      "decidable": true
+    },
+    {
+      "id": "missing-feature-icon",
+      "variant": "missing-feature-icon",
+      "split": "dev",
+      "category": "missing_element",
+      "component": "feature-icon-2",
+      "decidable": true
+    },
+    {
+      "id": "missing-price-badge",
+      "variant": "missing-price-badge",
+      "split": "dev",
+      "category": "missing_element",
+      "component": "price-badge",
+      "decidable": true
+    },
+    {
+      "id": "clipped-hero-title",
+      "variant": "clipped-hero-title",
+      "split": "dev",
+      "category": "clipped_text",
+      "component": "hero-title",
+      "decidable": true
+    },
+    {
+      "id": "clipped-cta-label",
+      "variant": "clipped-cta-label",
+      "split": "dev",
+      "category": "clipped_text",
+      "component": "hero-cta",
+      "decidable": true
+    },
+    {
+      "id": "clipped-card-title",
+      "variant": "clipped-card-title",
+      "split": "dev",
+      "category": "clipped_text",
+      "component": "feature-title-1",
+      "decidable": true
+    },
+    {
+      "id": "clipped-nav-link",
+      "variant": "clipped-nav-link",
+      "split": "dev",
+      "category": "clipped_text",
+      "component": "nav-link-3",
+      "decidable": true
+    },
+    {
+      "id": "layout-cta-shift",
+      "variant": "layout-cta-shift",
+      "split": "dev",
+      "category": "layout_mismatch",
+      "component": "hero-cta",
+      "decidable": true
+    },
+    {
+      "id": "layout-card-drop",
+      "variant": "layout-card-drop",
+      "split": "dev",
+      "category": "layout_mismatch",
+      "component": "feature-card-2",
+      "decidable": true
+    },
+    {
+      "id": "layout-logo-offset",
+      "variant": "layout-logo-offset",
+      "split": "dev",
+      "category": "layout_mismatch",
+      "component": "logo",
+      "decidable": true
+    },
+    {
+      "id": "layout-art-narrow",
+      "variant": "layout-art-narrow",
+      "split": "dev",
+      "category": "layout_mismatch",
+      "component": "hero-art",
+      "decidable": true
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lembar — FrameCheck demo page</title>
+<!--
+  Self-owned, deterministic demo page for FrameCheck fixtures.
+  No external fonts, images, scripts, dates, or randomness.
+  ?variant=<id> applies one deliberate defect; see demo/cases.json.
+  Every component under test carries data-fc="<component>".
+-->
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; color: #0f172a; background: #ffffff;
+         -webkit-font-smoothing: antialiased; }
+  body { width: 1280px; height: 800px; overflow: hidden; }
+
+  .nav { height: 72px; display: flex; align-items: center; padding: 0 64px; border-bottom: 1px solid #e2e8f0; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 20px; }
+  .logo-mark { width: 32px; height: 32px; border-radius: 8px; background: #0d9488; }
+  .nav-links { display: flex; gap: 32px; margin-left: 64px; font-size: 15px; color: #475569; }
+  .nav-link { display: block; width: 88px; }
+  .signin { margin-left: auto; height: 40px; padding: 0 20px; border-radius: 8px; border: 1px solid #cbd5e1;
+            font-size: 15px; font-weight: 600; display: flex; align-items: center; }
+
+  .hero { padding: 72px 64px 0; display: grid; grid-template-columns: 640px 1fr; gap: 48px; }
+  .hero-title { font-size: 52px; line-height: 60px; font-weight: 800; letter-spacing: -1px; width: 640px; }
+  .hero-sub { margin-top: 20px; font-size: 19px; line-height: 30px; color: #475569; width: 560px; }
+  .hero-actions { margin-top: 32px; display: flex; align-items: center; gap: 20px; }
+  .cta { height: 52px; width: 196px; border-radius: 10px; background: #0d9488; color: #fff; font-size: 17px;
+         font-weight: 700; display: flex; align-items: center; justify-content: center; white-space: nowrap; overflow: hidden; }
+  .cta-secondary { font-size: 16px; font-weight: 600; color: #0f766e; }
+  .hero-art { height: 300px; border-radius: 16px; background: #f0fdfa; border: 1px solid #99f6e4; position: relative; }
+  .art-line { position: absolute; left: 32px; height: 14px; border-radius: 7px; background: #5eead4; }
+  .price-badge { position: absolute; right: 24px; bottom: 24px; padding: 10px 16px; border-radius: 999px;
+                 background: #0f172a; color: #fff; font-size: 15px; font-weight: 700; white-space: nowrap; }
+
+  .features { margin: 64px 64px 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .card { height: 184px; padding: 24px; border: 1px solid #e2e8f0; border-radius: 14px; background: #fff; }
+  .card-icon { width: 40px; height: 40px; border-radius: 10px; background: #ccfbf1; }
+  .card-title { margin-top: 16px; font-size: 19px; font-weight: 700; white-space: nowrap; }
+  .card-text { margin-top: 8px; font-size: 15px; line-height: 23px; color: #64748b; }
+
+  /* ---- deliberate defects (one per variant) ---- */
+  /* missing_element: hidden but still occupying space, so nothing else moves */
+  [data-variant="missing-hero-cta"]     [data-fc="hero-cta"]     { visibility: hidden; }
+  [data-variant="missing-signin"]       [data-fc="signin"]       { visibility: hidden; }
+  [data-variant="missing-feature-icon"] [data-fc="feature-icon-2"] { visibility: hidden; }
+  [data-variant="missing-price-badge"]  [data-fc="price-badge"]  { visibility: hidden; }
+
+  /* clipped_text: the box keeps its size, the text no longer fits */
+  [data-variant="clipped-hero-title"] [data-fc="hero-title"] { white-space: nowrap; overflow: hidden; width: 520px; height: 120px; }
+  [data-variant="clipped-cta-label"]  [data-fc="hero-cta"]   { width: 118px; margin-right: 78px; justify-content: flex-start; padding-left: 18px; }
+  [data-variant="clipped-card-title"] [data-fc="feature-title-1"] { width: 110px; overflow: hidden; }
+  [data-variant="clipped-nav-link"]   [data-fc="nav-link-3"] { width: 44px; overflow: hidden; white-space: nowrap; }
+
+  /* layout_mismatch: a component moves or changes size */
+  [data-variant="layout-cta-shift"]    [data-fc="hero-cta"]       { transform: translate(140px, 24px); }
+  [data-variant="layout-card-drop"]    [data-fc="feature-card-2"] { transform: translateY(36px); }
+  [data-variant="layout-logo-offset"]  [data-fc="logo"]           { transform: translate(28px, 10px); }
+  [data-variant="layout-art-narrow"]   [data-fc="hero-art"]       { width: 380px; }
+</style>
+</head>
+<body>
+<script>
+  // Variant ids are restricted to a safe pattern before use.
+  var v = new URLSearchParams(location.search).get("variant") || "reference";
+  if (/^[a-z0-9-]{1,40}$/.test(v)) document.documentElement.dataset.variant = v;
+</script>
+
+<nav class="nav">
+  <div class="logo" data-fc="logo"><div class="logo-mark"></div>Lembar</div>
+  <div class="nav-links">
+    <span class="nav-link" data-fc="nav-link-1">Product</span>
+    <span class="nav-link" data-fc="nav-link-2">Pricing</span>
+    <span class="nav-link" data-fc="nav-link-3">Templates</span>
+  </div>
+  <div class="signin" data-fc="signin">Sign in</div>
+</nav>
+
+<section class="hero">
+  <div>
+    <h1 class="hero-title" data-fc="hero-title">Shared notes your whole team can trust</h1>
+    <p class="hero-sub">Write once, link everywhere. Lembar keeps meeting notes, decisions, and specs in one searchable place.</p>
+    <div class="hero-actions">
+      <div class="cta" data-fc="hero-cta">Start free trial</div>
+      <span class="cta-secondary">See how it works →</span>
+    </div>
+  </div>
+  <div class="hero-art" data-fc="hero-art">
+    <div class="art-line" style="top:40px;width:220px"></div>
+    <div class="art-line" style="top:72px;width:300px;background:#99f6e4"></div>
+    <div class="art-line" style="top:104px;width:260px;background:#99f6e4"></div>
+    <div class="art-line" style="top:136px;width:180px;background:#99f6e4"></div>
+    <div class="price-badge" data-fc="price-badge">From $4 / seat</div>
+  </div>
+</section>
+
+<section class="features">
+  <article class="card" data-fc="feature-card-1">
+    <div class="card-icon" data-fc="feature-icon-1"></div>
+    <h3 class="card-title" data-fc="feature-title-1">Linked decisions</h3>
+    <p class="card-text">Every decision points back to the meeting and the people who made it.</p>
+  </article>
+  <article class="card" data-fc="feature-card-2">
+    <div class="card-icon" data-fc="feature-icon-2"></div>
+    <h3 class="card-title" data-fc="feature-title-2">Fast search</h3>
+    <p class="card-text">Find any note by title, owner, or a phrase you half remember.</p>
+  </article>
+  <article class="card" data-fc="feature-card-3">
+    <div class="card-icon" data-fc="feature-icon-3"></div>
+    <h3 class="card-title" data-fc="feature-title-3">Calm sharing</h3>
+    <p class="card-text">Share a page with a link; edits stay with the people you invite.</p>
+  </article>
+</section>
+</body>
+</html>

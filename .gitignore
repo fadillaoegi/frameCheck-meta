@@ -1,0 +1,19 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+storage/
+node_modules/
+dist/
+coverage/
+*.log
+framecheck_BE/bin/
+framecheck_BE/tmp/
+
+# Video and audio: published separately (YouTube/Drive), rebuilt from submission/video/src.
+submission/video/build/
+*.mp4
+*.mp3
+*.wav
+*.aiff
+*.m4a

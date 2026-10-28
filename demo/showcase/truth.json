@@ -1,0 +1,11 @@
+{
+  "about": "Ground truth for the demo-video pair. Original, self-made design (site/kopiku.html). Boxes in CSS px = image px (1440x900, DPR 1), from getBoundingClientRect.",
+  "reference": "kopiku-design.png",
+  "actual": "kopiku-build.png",
+  "capture": { "viewport_width_css": 1440, "viewport_height_css": 900, "device_pixel_ratio": 1, "content_state_key": "checkout" },
+  "defects": [
+    { "category": "missing_element", "component": "promo", "reference_box": { "x": 966, "y": 383, "width": 380, "height": 50 }, "actual_box": null },
+    { "category": "clipped_text", "component": "item-name-1", "reference_box": { "x": 180, "y": 242, "width": 420, "height": 24 }, "actual_box": { "x": 180, "y": 242, "width": 210, "height": 24 } },
+    { "category": "layout_mismatch", "component": "pay", "reference_box": { "x": 966, "y": 658, "width": 380, "height": 62 }, "actual_box": { "x": 966, "y": 658, "width": 260, "height": 62 } }
+  ]
+}

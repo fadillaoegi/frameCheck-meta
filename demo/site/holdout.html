@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lembar plans — FrameCheck holdout page</title>
+<!--
+  HOLDOUT page for FrameCheck evaluation. Different layout, wording, styling,
+  and viewport from site/index.html. Do not look at model results on this set
+  while tuning prompts; evaluate it only after the prompt is frozen.
+  ?variant=<id> applies one defect; see demo/cases-holdout.json.
+-->
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-family: Georgia, "Times New Roman", serif; color: #1c1917; background: #fafaf9;
+         -webkit-font-smoothing: antialiased; }
+  body { width: 1440px; height: 900px; overflow: hidden; }
+
+  .top { height: 64px; background: #1c1917; color: #fafaf9; display: flex; align-items: center; padding: 0 48px; gap: 24px; }
+  .brand { font-size: 22px; font-style: italic; font-weight: 700; }
+  .search { margin-left: 40px; width: 360px; height: 36px; border-radius: 18px; background: #44403c; color: #d6d3d1;
+            font: 14px/36px Arial, sans-serif; padding-left: 18px; }
+  .avatar { margin-left: auto; width: 36px; height: 36px; border-radius: 50%; background: #f59e0b; }
+
+  .banner { margin: 28px 48px 0; height: 56px; border-radius: 8px; background: #fef3c7; display: flex; align-items: center; gap: 14px; padding: 0 20px; }
+  .banner-icon { width: 24px; height: 24px; border-radius: 4px; background: #d97706; flex: none; }
+  .banner-text { font: 15px/20px Arial, sans-serif; color: #78350f; white-space: nowrap; }
+
+  h1 { margin: 36px 48px 0; font-size: 36px; font-weight: 400; }
+  .plans { margin: 28px 48px 0; display: flex; gap: 32px; }
+  .plan { width: 432px; height: 380px; background: #fff; border: 2px solid #e7e5e4; border-radius: 4px; padding: 32px; position: relative; }
+  .plan.featured { border-color: #1c1917; }
+  .plan-title { font-size: 26px; white-space: nowrap; }
+  .price { margin-top: 14px; font: 700 44px/52px Arial, sans-serif; white-space: nowrap; }
+  .price small { font-size: 16px; font-weight: 400; color: #78716c; }
+  .perks { margin-top: 20px; font: 15px/26px Arial, sans-serif; color: #57534e; list-style: none; }
+  .choose { position: absolute; left: 32px; bottom: 32px; width: 200px; height: 46px; border-radius: 4px; background: #1c1917;
+            color: #fff; font: 600 16px/46px Arial, sans-serif; text-align: center; white-space: nowrap; overflow: hidden; }
+
+  .foot { position: absolute; top: 852px; left: 48px; display: flex; gap: 28px; font: 13px Arial, sans-serif; color: #78716c; }
+  .foot span { display: block; width: 110px; }
+
+  /* ---- deliberate defects ---- */
+  [data-variant="h-missing-choose-2"]   [data-fc="choose-2"]    { visibility: hidden; }
+  [data-variant="h-missing-search"]     [data-fc="search"]      { visibility: hidden; }
+  [data-variant="h-missing-banner-icon"] [data-fc="banner-icon"] { visibility: hidden; }
+  [data-variant="h-missing-foot-2"]     [data-fc="foot-2"]      { visibility: hidden; }
+
+  [data-variant="h-clip-plan-title-3"] [data-fc="plan-title-3"] { width: 120px; overflow: hidden; }
+  [data-variant="h-clip-banner-text"]  [data-fc="banner-text"]  { width: 330px; overflow: hidden; }
+  [data-variant="h-clip-choose-1"]     [data-fc="choose-1"]     { font-size: 30px; }
+  [data-variant="h-clip-price-2"]      [data-fc="price-2"]      { width: 110px; overflow: hidden; }
+
+  [data-variant="h-layout-plan-1"]  [data-fc="plan-1"]  { transform: translate(0, 34px); }
+  [data-variant="h-layout-avatar"]  [data-fc="avatar"]  { transform: translateX(-60px); }
+  [data-variant="h-layout-banner"]  [data-fc="banner"]  { width: 900px; }
+  [data-variant="h-layout-foot-3"]  [data-fc="foot-3"]  { transform: translate(40px, -12px); }
+</style>
+</head>
+<body>
+<script>
+  var v = new URLSearchParams(location.search).get("variant") || "reference";
+  if (/^[a-z0-9-]{1,40}$/.test(v)) document.documentElement.dataset.variant = v;
+</script>
+
+<header class="top">
+  <div class="brand" data-fc="brand">Lembar</div>
+  <div class="search" data-fc="search">Search notes, people, decisions</div>
+  <div class="avatar" data-fc="avatar"></div>
+</header>
+
+<div class="banner" data-fc="banner">
+  <div class="banner-icon" data-fc="banner-icon"></div>
+  <span class="banner-text" data-fc="banner-text">Annual billing saves two months on every plan this quarter.</span>
+</div>
+
+<h1>Pick the plan that fits your team</h1>
+
+<section class="plans">
+  <article class="plan" data-fc="plan-1">
+    <h2 class="plan-title" data-fc="plan-title-1">Starter</h2>
+    <div class="price" data-fc="price-1">$0 <small>forever</small></div>
+    <ul class="perks"><li>Up to 3 editors</li><li>Unlimited notes</li><li>7-day history</li></ul>
+    <div class="choose" data-fc="choose-1">Choose Starter</div>
+  </article>
+  <article class="plan featured" data-fc="plan-2">
+    <h2 class="plan-title" data-fc="plan-title-2">Team</h2>
+    <div class="price" data-fc="price-2">$4 <small>per seat</small></div>
+    <ul class="perks"><li>Unlimited editors</li><li>Linked decisions</li><li>90-day history</li></ul>
+    <div class="choose" data-fc="choose-2">Choose Team</div>
+  </article>
+  <article class="plan" data-fc="plan-3">
+    <h2 class="plan-title" data-fc="plan-title-3">Organisation</h2>
+    <div class="price" data-fc="price-3">$9 <small>per seat</small></div>
+    <ul class="perks"><li>SSO and audit log</li><li>Admin controls</li><li>Unlimited history</li></ul>
+    <div class="choose" data-fc="choose-3">Talk to us</div>
+  </article>
+</section>
+
+<footer class="foot">
+  <span data-fc="foot-1">Terms</span>
+  <span data-fc="foot-2">Privacy</span>
+  <span data-fc="foot-3">Status</span>
+  <span data-fc="foot-4">Contact</span>
+</footer>
+</body>
+</html>

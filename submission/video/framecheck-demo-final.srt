@@ -1,0 +1,116 @@
+1
+00:00:07,350 --> 00:00:10,276
+Every front-end developer knows this question:
+
+2
+00:00:10,276 --> 00:00:12,757
+does the build really match the design?
+
+3
+00:00:13,507 --> 00:00:16,407
+FrameCheck answers it in five steps.
+
+4
+00:00:17,157 --> 00:00:21,624
+Three kinds of defect: missing, clipped, misplaced.
+
+5
+00:00:24,574 --> 00:00:28,361
+Let's try it on a checkout page I designed for a coffee subscription.
+
+6
+00:00:30,174 --> 00:00:33,987
+I drop in the design export, and a screenshot of the build.
+
+7
+00:00:34,737 --> 00:00:37,271
+Both must be captured the same way.
+
+8
+00:00:37,271 --> 00:00:43,062
+FrameCheck reads the image size and suggests the pixel ratio, so the two line up
+
+9
+00:00:43,062 --> 00:00:44,220
+pixel for pixel.
+
+10
+00:00:45,037 --> 00:00:48,885
+I pair them, and add a note about what matters on this page.
+
+11
+00:00:48,885 --> 00:00:54,206
+Notes give the model context, but they can't change its rules or its output format.
+
+12
+00:00:59,737 --> 00:01:04,387
+Now, one request to Meta's Muse Spark, with both images.
+
+13
+00:01:05,137 --> 00:01:08,512
+It answers in strict, structured JSON:
+
+14
+00:01:08,512 --> 00:01:12,686
+a category, a summary, and a box on each image.
+
+15
+00:01:13,436 --> 00:01:16,885
+Three findings, with the model and token cost.
+
+16
+00:01:19,835 --> 00:01:26,299
+The promo code row is missing. Both images zoom to the same spot, with a dashed box
+
+17
+00:01:26,299 --> 00:01:28,403
+where it should be. Accept.
+
+18
+00:01:29,153 --> 00:01:34,817
+The pay button is narrower than designed, boxed on both images, so the difference is
+
+19
+00:01:34,817 --> 00:01:35,761
+easy to check.
+
+20
+00:01:36,653 --> 00:01:39,461
+And the first product title is cut off.
+
+21
+00:01:39,461 --> 00:01:44,646
+Nothing counts until a person decides, so each one gets a human verdict.
+
+22
+00:01:47,596 --> 00:01:52,112
+Swipe across the two images to see each change at the same position:
+
+23
+00:01:52,112 --> 00:01:56,164
+the promo row vanishes, the button shrinks, the title is cut.
+
+24
+00:01:58,096 --> 00:02:02,164
+Or pull them apart in 3D. The build floats above the design.
+
+25
+00:02:02,164 --> 00:02:07,725
+Flatten it into an overlay, or turn the stack and follow a finding from the design
+
+26
+00:02:07,725 --> 00:02:13,353
+straight up to the build. Every box is anchored to the original pixels, so it lines
+
+27
+00:02:13,353 --> 00:02:14,370
+up at any zoom.
+
+28
+00:02:17,396 --> 00:02:22,233
+Finally, export the reviewed findings as Markdown for the pull request, with the
+
+29
+00:02:22,233 --> 00:02:24,893
+model, the tokens, and every human decision.
+

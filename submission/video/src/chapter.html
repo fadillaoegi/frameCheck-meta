@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FrameCheck chapter card</title>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=block" rel="stylesheet">
+</head>
+<body>
+<script type="module">
+// A 2.2 s chapter card: a neon panel swings up out of the floor grid in 3D,
+// holds, then tilts away. Text comes from the query string:
+//   chapter.html?n=02&title=Analyse%20with%20Muse%20Spark&sub=One%20request...&color=%2300f0ff
+import { C, buildStage, el, ready, prog, easeOut, easeInOut, easeOutBack, lerp } from "./scene.js";
+
+const q = new URLSearchParams(location.search);
+const color = q.get("color") || C.neon;
+const T = { duration: 2.2, in: [0, 0.75], out: [1.75, 2.2] };
+
+const stage = buildStage();
+stage.setCamera({ rx: 64, rz: -18, z: -300, y: 80 });
+stage.floor.style.opacity = "0.9";
+for (const l of [stage.fx, stage.fy, stage.fc]) l.style.opacity = "0.5";
+
+// The card lives in its own perspective space on top of the floor.
+const space = el("div", { position: "absolute", inset: "0", perspective: "1400px", perspectiveOrigin: "50% 60%" }, stage.hud);
+const card = el("div", {
+  position: "absolute", left: "50%", top: "50%", width: "1180px", marginLeft: "-590px", marginTop: "-190px",
+  padding: "54px 70px", borderRadius: "28px", background: "rgba(13,13,26,0.94)", transformOrigin: "50% 100%",
+  boxShadow: `inset 0 0 0 2px ${color}, 0 0 60px -10px ${color}, 0 60px 120px -40px rgba(0,0,0,0.9)`,
+  color: C.paper, display: "flex", alignItems: "center", gap: "56px",
+}, space);
+const num = el("div", { fontFamily: "'Chakra Petch', sans-serif", fontWeight: "600", fontSize: "170px", lineHeight: "1", color, textShadow: `0 0 30px ${color}` }, card);
+num.textContent = q.get("n") || "01";
+const col = el("div", { minWidth: "0" }, card);
+const kicker = el("div", { fontFamily: "'IBM Plex Mono', monospace", fontSize: "24px", letterSpacing: "6px", color, textTransform: "uppercase" }, col);
+kicker.textContent = q.get("kicker") || "Step";
+const title = el("div", { marginTop: "10px", fontFamily: "'Chakra Petch', sans-serif", fontWeight: "600", fontSize: "70px", lineHeight: "1.05" }, col);
+title.textContent = q.get("title") || "";
+const sub = el("div", { marginTop: "18px", fontFamily: "'IBM Plex Sans', sans-serif", fontSize: "30px", lineHeight: "1.35", color: "rgba(236,235,255,0.78)" }, col);
+sub.textContent = q.get("sub") || "";
+
+window.render = (t) => {
+  stage.animateMotes(t + 3, 1);
+  stage.setCamera({ rx: 64, rz: -18 + t * 3, z: -300 + t * 40, y: 80 });
+  const a = easeOutBack(prog(t, ...T.in));
+  const o = easeInOut(prog(t, ...T.out));
+  card.style.transform = `translateZ(${lerp(-260, 0, easeOut(prog(t, ...T.in))) - 200 * o}px) rotateX(${lerp(-88, 0, a) + 70 * o}deg) rotateY(${lerp(-14, 0, a) + 10 * o}deg)`;
+  card.style.opacity = String(Math.min(1, prog(t, 0, 0.25)) * (1 - o));
+  const s = easeOut(prog(t, 0.45, 1.0));
+  sub.style.opacity = String(s * (1 - o));
+  sub.style.transform = `translateY(${lerp(14, 0, s)}px)`;
+  stage.overlay.style.opacity = String(1 - easeOut(prog(t, 0, 0.3)) + easeInOut(prog(t, 1.95, 2.2)));
+};
+
+await ready();
+window.render(0);
+window.__ready = true;
+window.__duration = T.duration;
+</script>
+</body>
+</html>

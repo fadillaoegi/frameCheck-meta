@@ -1,0 +1,26 @@
+{
+  "about": "HOLDOUT fixture set. Different page, wording, styling, fonts, and viewport from the dev set. Evaluate only after a prompt is frozen; never tune on these results.",
+  "page": "site/holdout.html",
+  "capture": { "viewport_width_css": 1440, "viewport_height_css": 900, "device_pixel_ratio": 1, "content_state_key": "plans" },
+  "cases": [
+    { "id": "h-control-unchanged", "variant": "reference", "split": "holdout", "category": null, "component": null, "decidable": true,
+      "note": "Identical capture. Any finding is a false positive." },
+    { "id": "h-control-jpeg", "variant": "reference", "split": "holdout", "category": null, "component": null, "decidable": true,
+      "postprocess": "jpeg85", "note": "Same render saved as JPEG quality 85: compression noise only. Any finding is a false positive." },
+
+    { "id": "h-missing-choose-2", "variant": "h-missing-choose-2", "split": "holdout", "category": "missing_element", "component": "choose-2", "decidable": true },
+    { "id": "h-missing-search", "variant": "h-missing-search", "split": "holdout", "category": "missing_element", "component": "search", "decidable": true },
+    { "id": "h-missing-banner-icon", "variant": "h-missing-banner-icon", "split": "holdout", "category": "missing_element", "component": "banner-icon", "decidable": true },
+    { "id": "h-missing-foot-2", "variant": "h-missing-foot-2", "split": "holdout", "category": "missing_element", "component": "foot-2", "decidable": true },
+
+    { "id": "h-clip-plan-title-3", "variant": "h-clip-plan-title-3", "split": "holdout", "category": "clipped_text", "component": "plan-title-3", "decidable": true },
+    { "id": "h-clip-banner-text", "variant": "h-clip-banner-text", "split": "holdout", "category": "clipped_text", "component": "banner-text", "decidable": true },
+    { "id": "h-clip-choose-1", "variant": "h-clip-choose-1", "split": "holdout", "category": "clipped_text", "component": "choose-1", "decidable": true },
+    { "id": "h-clip-price-2", "variant": "h-clip-price-2", "split": "holdout", "category": "clipped_text", "component": "price-2", "decidable": true },
+
+    { "id": "h-layout-plan-1", "variant": "h-layout-plan-1", "split": "holdout", "category": "layout_mismatch", "component": "plan-1", "decidable": true },
+    { "id": "h-layout-avatar", "variant": "h-layout-avatar", "split": "holdout", "category": "layout_mismatch", "component": "avatar", "decidable": true },
+    { "id": "h-layout-banner", "variant": "h-layout-banner", "split": "holdout", "category": "layout_mismatch", "component": "banner", "decidable": true },
+    { "id": "h-layout-foot-3", "variant": "h-layout-foot-3", "split": "holdout", "category": "layout_mismatch", "component": "foot-3", "decidable": true }
+  ]
+}

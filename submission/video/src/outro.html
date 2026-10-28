@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FrameCheck outro</title>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600&display=block" rel="stylesheet">
+</head>
+<body>
+<script type="module">
+import { C, THICK, buildStage, buildMark, el, text, ready, prog, easeOut, easeInOut, easeOutBack, lerp } from "./scene.js";
+
+// Timeline (seconds). Keep in sync with sound.py OUTRO cues.
+export const T = {
+  duration: 7.0,
+  fadeIn: [0, 0.6],
+  cards: [0.5, 0.8, 1.1], // each card flips in (whoosh)
+  caption: 1.9,           // tick
+  cardsOut: [3.0, 3.5],   // whoosh
+  word: 3.6,              // chord + low hit
+  tagline: 4.2,
+  credit: 4.6,
+  lift: [5.3, 5.9],       // frame lifts, dot pings at 5.6
+  fadeOut: [6.3, 7.0],
+};
+const FRAME_Z = THICK + 36;
+const POST_H = 36 + THICK + 190;
+
+const stage = buildStage();
+const mark = buildMark(stage.world);
+mark.setPost(POST_H);
+for (const l of mark.cross) l.style.opacity = "1";
+
+// ---- three category cards, flipping in on a 2D plane with their own perspective
+const CARDS = [
+  { color: C.red, label: "Missing element", text: "In the design, gone from the build." },
+  { color: C.clipped, label: "Clipped text", text: "Cut off, truncated, overflowing." },
+  { color: C.layout, label: "Layout mismatch", text: "Same element, wrong place or size." },
+];
+const row = el("div", { position: "absolute", left: "0", right: "0", top: "640px", display: "flex", justifyContent: "center", gap: "36px", perspective: "1200px" }, stage.hud);
+const cards = CARDS.map((c) => {
+  const card = el("div", {
+    width: "430px", padding: "26px 30px", borderRadius: "14px", background: "rgba(13,13,26,0.92)",
+    boxShadow: `inset 0 0 0 1.5px ${c.color}, 0 0 30px -6px ${c.color}, 0 30px 60px -20px rgba(0,0,0,0.8)`,
+    transformOrigin: "50% 100%", color: C.paper, fontFamily: "'IBM Plex Sans', sans-serif", position: "relative", overflow: "hidden",
+  }, row);
+  el("div", { position: "absolute", left: "0", top: "0", bottom: "0", width: "8px", background: c.color, boxShadow: `0 0 16px ${c.color}` }, card);
+  const h = el("div", { fontSize: "30px", fontWeight: "600", color: c.color, letterSpacing: "0.5px", textShadow: `0 0 14px ${c.color}` }, card);
+  h.textContent = c.label;
+  const p = el("div", { marginTop: "8px", fontSize: "22px", color: "rgba(236,235,255,0.8)" }, card);
+  p.textContent = c.text;
+  return card;
+});
+const caption = text(stage.hud, "Evidence on both images  ·  A person decides every finding  ·  Export to your PR", {
+  top: "860px", fontFamily: "'IBM Plex Mono', monospace", fontSize: "26px", letterSpacing: "1px", color: "rgba(236,235,255,0.7)",
+});
+
+// ---- closing wordmark
+const title = text(stage.hud, "", { top: "690px", fontFamily: "'Chakra Petch', sans-serif", fontWeight: "600", fontSize: "150px", lineHeight: "1", letterSpacing: "1px" });
+title.textContent = "Frame";
+const accent = el("em", { color: C.neon, fontStyle: "normal", textShadow: `0 0 18px ${C.neon}, 0 0 50px rgba(0,240,255,0.6)` }, title);
+accent.textContent = "Check";
+const tagline = text(stage.hud, "Visual QA with evidence.", { top: "885px", fontFamily: "'IBM Plex Mono', monospace", fontSize: "30px", letterSpacing: "3px", color: "rgba(236,235,255,0.8)" });
+const credit = text(stage.hud, "Meta Global AI Developer Hackathon  ·  Indie track  ·  Built on Meta Muse Spark", {
+  top: "960px", fontFamily: "'IBM Plex Mono', monospace", fontSize: "20px", letterSpacing: "2px", color: "rgba(236,235,255,0.45)",
+});
+
+window.render = (t) => {
+  stage.floor.style.opacity = "0.9";
+  stage.animateMotes(t + 7, 1);
+
+  // Camera sweeps a third of a turn around the mark, then settles in the logo pose.
+  const sweep = easeInOut(prog(t, 0, 3.6));
+  const settle = easeInOut(prog(t, 3.0, 4.4));
+  stage.setCamera({
+    rx: lerp(62, 52, settle),
+    rz: lerp(-160, -45, sweep) + Math.sin(t * 0.5) * 1.5,
+    z: lerp(-700, -490, easeOut(prog(t, 0, 2.5))),
+    y: -190,
+  });
+
+  // Frame lifts off the design for a beat, the dot pings, and it settles again.
+  const lift = Math.sin(Math.PI * prog(t, ...T.lift));
+  mark.frameG.style.transform = `translateZ(${FRAME_Z + 70 * easeOut(lift)}px)`;
+  const r = prog(t, 5.6, 6.5);
+  mark.ring.style.transform = `scale(${1 + 5 * easeOut(r)})`;
+  mark.ring.style.opacity = String(r > 0 ? 1 - r : 0);
+  mark.dot.style.transform = `scale(${1 + 0.25 * Math.sin(Math.PI * prog(t, 5.55, 5.85))})`;
+
+  // Cards flip up in turn, then fold away.
+  const out = easeInOut(prog(t, ...T.cardsOut));
+  cards.forEach((card, i) => {
+    const a = easeOutBack(prog(t, T.cards[i], T.cards[i] + 0.6));
+    card.style.transform = `translateY(${lerp(80, 0, a) - 60 * out}px) rotateX(${lerp(-95, 0, a) + 80 * out}deg)`;
+    card.style.opacity = String(prog(t, T.cards[i], T.cards[i] + 0.2) * (1 - out));
+  });
+  const cap = easeOut(prog(t, T.caption, T.caption + 0.5));
+  caption.style.opacity = String(cap * (1 - out));
+  caption.style.transform = `translateY(${lerp(16, 0, cap)}px)`;
+
+  const w = easeOut(prog(t, T.word, T.word + 0.8));
+  title.style.opacity = String(w);
+  title.style.transform = `translateY(${lerp(40, 0, w)}px)`;
+  title.style.filter = `blur(${lerp(12, 0, w)}px)`;
+  const g = easeOut(prog(t, T.tagline, T.tagline + 0.6));
+  tagline.style.opacity = String(g);
+  tagline.style.transform = `translateY(${lerp(16, 0, g)}px)`;
+  credit.style.opacity = String(easeOut(prog(t, T.credit, T.credit + 0.6)));
+
+  stage.overlay.style.opacity = String(1 - easeOut(prog(t, ...T.fadeIn)) + easeInOut(prog(t, ...T.fadeOut)));
+};
+
+await ready();
+window.render(0);
+window.__ready = true;
+window.__duration = T.duration;
+</script>
+</body>
+</html>

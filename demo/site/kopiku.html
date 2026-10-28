@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kopiku checkout — FrameCheck showcase page</title>
+<!--
+  SHOWCASE page for the FrameCheck demo video. Original, self-made design of a
+  fictional coffee-subscription checkout. ?variant=reference is the "design
+  export"; ?variant=showcase is the "build" with three defects, one per category:
+    missing_element  promo        the promo-code row is not rendered
+    clipped_text     item-name-1  the first product name is cut off
+    layout_mismatch  pay          the pay button is narrower and off-centre
+  Single-defect variants (missing-promo, clip-item-name, layout-pay) exist for scoring.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=block" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-family: "Plus Jakarta Sans", system-ui, sans-serif; color: #241a14; background: #f6f1ea; -webkit-font-smoothing: antialiased; }
+  body { width: 1440px; height: 900px; overflow: hidden; }
+
+  .top { height: 76px; display: flex; align-items: center; padding: 0 64px; border-bottom: 1px solid #e8ddd0; background: #fffaf4; }
+  .logo { display: flex; align-items: center; gap: 10px; font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
+  .bean { width: 30px; height: 30px; border-radius: 50%; background: #6b3f22; position: relative; transform: rotate(-30deg); }
+  .bean::after { content: ""; position: absolute; left: 13px; top: 4px; width: 4px; height: 22px; border-radius: 4px; background: #f6f1ea; }
+  .steps { margin-left: 120px; display: flex; gap: 14px; align-items: center; font-size: 14px; font-weight: 600; color: #a08f80; }
+  .steps .on { color: #241a14; }
+  .steps .dot { width: 26px; height: 26px; border-radius: 50%; display: inline-grid; place-items: center; background: #eadfd2; margin-right: 8px; font-size: 12px; }
+  .steps .on .dot { background: #241a14; color: #fff; }
+  .steps .line { width: 40px; height: 2px; background: #e2d5c6; }
+  .user { margin-left: auto; display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 600; }
+  .avatar { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, #e7a46b, #b5653a); }
+
+  .wrap { display: grid; grid-template-columns: 1fr 440px; gap: 40px; padding: 40px 64px 0; }
+  h1 { font-size: 34px; font-weight: 800; letter-spacing: -1px; }
+  .sub { margin-top: 6px; font-size: 15px; color: #8a7767; }
+
+  .items { margin-top: 26px; display: grid; gap: 14px; }
+  .item { height: 112px; background: #fff; border-radius: 18px; display: flex; align-items: center; gap: 20px; padding: 0 24px; box-shadow: 0 1px 0 #eadfd2; }
+  .pack { width: 72px; height: 80px; border-radius: 12px 12px 18px 18px; position: relative; flex: none; }
+  .pack::after { content: ""; position: absolute; left: 18px; right: 18px; top: 26px; height: 24px; border-radius: 6px; background: rgba(255,255,255,0.85); }
+  .p1 { background: linear-gradient(160deg, #7a4a2a, #4a2a16); }
+  .p2 { background: linear-gradient(160deg, #3f6b4b, #24402c); }
+  .meta { flex: 1; min-width: 0; }
+  .item-name { font-size: 19px; font-weight: 700; white-space: nowrap; }
+  .item-note { margin-top: 6px; font-size: 14px; color: #8a7767; }
+  .qty { display: flex; align-items: center; gap: 14px; font-weight: 700; }
+  .qty b { width: 34px; height: 34px; border-radius: 10px; border: 1.5px solid #e2d5c6; display: grid; place-items: center; font-weight: 600; color: #8a7767; }
+  .price { width: 130px; text-align: right; font-size: 18px; font-weight: 800; }
+
+  .ship-title { margin-top: 30px; font-size: 18px; font-weight: 700; }
+  .ship { margin-top: 14px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .opt { height: 92px; border-radius: 16px; background: #fff; border: 2px solid transparent; padding: 18px 20px; }
+  .opt.sel { border-color: #c2723a; background: #fff7ef; }
+  .opt-t { font-size: 16px; font-weight: 700; }
+  .opt-s { margin-top: 6px; font-size: 13px; color: #8a7767; }
+
+  .summary { background: #fff; border-radius: 24px; padding: 30px; box-shadow: 0 30px 60px -40px rgba(80, 40, 10, 0.45); height: 700px; position: relative; }
+  .sum-t { font-size: 20px; font-weight: 800; }
+  .row { display: flex; justify-content: space-between; margin-top: 18px; font-size: 15px; color: #6e5d4f; }
+  .row b { color: #241a14; }
+  .row.save b { color: #2f8a55; }
+  .hr { height: 1px; background: #efe5d9; margin: 22px 0 4px; }
+  .total { display: flex; justify-content: space-between; align-items: baseline; margin-top: 16px; }
+  .total span { font-size: 16px; font-weight: 700; }
+  .total b { font-size: 30px; font-weight: 800; letter-spacing: -0.5px; }
+  .promo { margin-top: 24px; display: flex; gap: 10px; }
+  .promo-in { flex: 1; height: 50px; border-radius: 14px; border: 1.5px dashed #d8c7b4; display: flex; align-items: center; padding: 0 16px; font-size: 14px; color: #a08f80; }
+  .promo-btn { width: 96px; height: 50px; border-radius: 14px; background: #f3e7da; display: grid; place-items: center; font-weight: 700; font-size: 14px; color: #6b3f22; }
+  .paywith { position: absolute; left: 30px; right: 30px; top: 360px; }
+  .paywith-t { font-size: 15px; font-weight: 700; }
+  .chips { margin-top: 12px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .chip { height: 64px; border-radius: 14px; border: 1.5px solid #ecdfd1; display: grid; place-items: center; font-size: 14px; font-weight: 700; color: #6e5d4f; }
+  .chip.sel { border: 2px solid #241a14; color: #241a14; background: #fffaf4; }
+  .addr { margin-top: 18px; padding: 14px 16px; border-radius: 14px; background: #faf5ef; font-size: 13px; line-height: 1.5; color: #6e5d4f; }
+  .addr b { color: #241a14; }
+  .pay { position: absolute; left: 30px; right: 30px; bottom: 96px; height: 62px; border-radius: 18px; background: #c2723a; color: #fff; display: grid; place-items: center; font-size: 18px; font-weight: 800; box-shadow: 0 14px 30px -14px #c2723a; }
+  .trust { position: absolute; left: 30px; right: 30px; bottom: 34px; display: flex; justify-content: center; gap: 22px; font-size: 13px; font-weight: 600; color: #8a7767; }
+  .trust i { display: inline-block; width: 14px; height: 14px; border-radius: 4px; background: #2f8a55; margin-right: 6px; vertical-align: -2px; }
+
+  /* ---- deliberate defects ---- */
+  [data-variant="showcase"] [data-fc="promo"], [data-variant="missing-promo"] [data-fc="promo"] { display: none; }
+  [data-variant="showcase"] [data-fc="item-name-1"], [data-variant="clip-item-name"] [data-fc="item-name-1"] { width: 210px; overflow: hidden; }
+  [data-variant="showcase"] [data-fc="pay"], [data-variant="layout-pay"] [data-fc="pay"] { right: 150px; }
+</style>
+</head>
+<body>
+<script>
+  var v = new URLSearchParams(location.search).get("variant") || "reference";
+  if (/^[a-z0-9-]{1,40}$/.test(v)) document.documentElement.dataset.variant = v;
+</script>
+
+<header class="top">
+  <div class="logo" data-fc="logo"><span class="bean"></span>kopiku</div>
+  <nav class="steps" data-fc="steps">
+    <span><span class="dot">✓</span>Cart</span><span class="line"></span>
+    <span><span class="dot">✓</span>Shipping</span><span class="line"></span>
+    <span class="on"><span class="dot">3</span>Payment</span>
+  </nav>
+  <div class="user" data-fc="user"><span class="avatar"></span>Sari K.</div>
+</header>
+
+<main class="wrap">
+  <section>
+    <h1>Checkout</h1>
+    <p class="sub">Freshly roasted every Monday. Delivered across Indonesia.</p>
+
+    <div class="items">
+      <article class="item" data-fc="item-1">
+        <div class="pack p1"></div>
+        <div class="meta">
+          <div class="item-name" data-fc="item-name-1">Aceh Gayo Single Origin · 250 g</div>
+          <div class="item-note">Medium roast · whole bean · every 2 weeks</div>
+        </div>
+        <div class="qty"><b>−</b>1<b>+</b></div>
+        <div class="price">Rp 98.000</div>
+      </article>
+      <article class="item" data-fc="item-2">
+        <div class="pack p2"></div>
+        <div class="meta">
+          <div class="item-name" data-fc="item-name-2">Toraja Sapan · 250 g</div>
+          <div class="item-note">Light roast · ground for V60 · every 4 weeks</div>
+        </div>
+        <div class="qty"><b>−</b>2<b>+</b></div>
+        <div class="price">Rp 172.000</div>
+      </article>
+    </div>
+
+    <h2 class="ship-title">Delivery</h2>
+    <div class="ship" data-fc="ship">
+      <div class="opt sel"><div class="opt-t">Regular</div><div class="opt-s">2–3 days · Rp 15.000</div></div>
+      <div class="opt"><div class="opt-t">Same day</div><div class="opt-s">Jakarta only · Rp 35.000</div></div>
+      <div class="opt"><div class="opt-t">Pick up</div><div class="opt-s">Kopiku Kemang · free</div></div>
+    </div>
+  </section>
+
+  <aside class="summary" data-fc="summary">
+    <div class="sum-t">Order summary</div>
+    <div class="row"><span>Subtotal (3 bags)</span><b>Rp 270.000</b></div>
+    <div class="row"><span>Delivery</span><b>Rp 15.000</b></div>
+    <div class="row save"><span>Subscriber discount 10%</span><b>− Rp 27.000</b></div>
+    <div class="hr"></div>
+    <div class="total" data-fc="total"><span>Total</span><b>Rp 258.000</b></div>
+    <div class="promo" data-fc="promo"><div class="promo-in">Have a promo code?</div><div class="promo-btn">Apply</div></div>
+    <div class="paywith" data-fc="paywith">
+      <div class="paywith-t">Pay with</div>
+      <div class="chips"><div class="chip sel">QRIS</div><div class="chip">E-wallet</div><div class="chip">Card</div></div>
+      <div class="addr"><b>Deliver to</b> · Jl. Kemang Raya 12, Jakarta Selatan</div>
+    </div>
+    <div class="pay" data-fc="pay">Pay Rp 258.000</div>
+    <div class="trust" data-fc="trust"><span><i></i>Secure payment</span><span><i></i>QRIS · e-wallet · cards</span></div>
+  </aside>
+</main>
+</body>
+</html>

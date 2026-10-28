@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FrameCheck intro</title>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600&family=IBM+Plex+Mono:wght@400;500&display=block" rel="stylesheet">
+</head>
+<body>
+<script type="module">
+import { C, THICK, buildStage, buildMark, text, ready, prog, easeOut, easeInOut, easeOutBack, lerp } from "./scene.js";
+
+// Timeline (seconds). Keep in sync with sound.py INTRO cues.
+export const T = {
+  duration: 7.0,
+  plateIn: [0.6, 2.0],   // design rises from the depth; lands at 2.0 (thud)
+  frameIn: [2.0, 3.0],   // build drops onto it; lands at 3.0 (click)
+  dot: 3.2,              // registration point found (ping)
+  post: [3.4, 4.2],      // evidence post rises (sweep)
+  pull: [4.3, 5.4],      // camera pulls back; wordmark arrives (chord at 4.6)
+  fade: [6.5, 7.0],
+};
+const FRAME_Z = THICK + 36;
+const POST_H = 36 + THICK + 190;
+
+const stage = buildStage();
+const mark = buildMark(stage.world);
+
+const title = text(stage.hud, "FrameCheck", { top: "700px", fontFamily: "'Chakra Petch', sans-serif", fontWeight: "600", fontSize: "150px", lineHeight: "1", letterSpacing: "1px" });
+const tagline = text(stage.hud, "Does the build match the design?", { top: "900px", fontFamily: "'IBM Plex Mono', monospace", fontSize: "30px", letterSpacing: "3px", color: "rgba(236,235,255,0.75)" });
+const accent = document.createElement("em");
+accent.textContent = "Check";
+accent.style.cssText = `color:${C.neon};font-style:normal;text-shadow:0 0 18px ${C.neon},0 0 50px rgba(0,240,255,0.6)`;
+title.textContent = "Frame";
+title.appendChild(accent);
+
+window.render = (t) => {
+  // Environment
+  const env = easeOut(prog(t, 0, 1.2));
+  stage.floor.style.opacity = String(0.9 * env);
+  const draw = easeInOut(prog(t, 0.2, 1.4));
+  stage.fx.style.transform = `scaleX(${draw})`;
+  stage.fy.style.transform = `scaleY(${draw})`;
+  stage.fc.style.transform = `scale(${0.6 + 0.4 * draw})`;
+  stage.fc.style.opacity = String(draw);
+  stage.animateMotes(t, env);
+
+  // Design plate rises out of the depth with a quarter turn.
+  const p = easeOut(prog(t, ...T.plateIn));
+  mark.designG.style.transform = `translateZ(${lerp(-700, 0, p)}px) rotateZ(${lerp(120, 0, p)}deg)`;
+  mark.designG.style.opacity = String(prog(t, T.plateIn[0], T.plateIn[0] + 0.4));
+  mark.shadow.style.opacity = String(p);
+
+  // Build frame drops from above and settles with a small overshoot.
+  const f = easeOutBack(prog(t, ...T.frameIn));
+  mark.frameG.style.transform = `translateZ(${lerp(1400, FRAME_Z, f)}px) rotateZ(${lerp(-90, 0, easeOut(prog(t, ...T.frameIn)))}deg)`;
+  mark.frameG.style.opacity = String(prog(t, T.frameIn[0], T.frameIn[0] + 0.15));
+
+  // Registration point: crosshair draws, then the dot pops and pings.
+  const c = easeOut(prog(t, T.dot - 0.5, T.dot));
+  for (const l of mark.cross) l.style.opacity = String(c);
+  mark.circle.style.opacity = String(c);
+  mark.circle.style.transform = `scale(${lerp(1.6, 1, c)})`;
+  const d = easeOutBack(prog(t, T.dot, T.dot + 0.35));
+  mark.dot.style.transform = `scale(${d})`;
+  const r = prog(t, T.dot, T.dot + 0.9);
+  mark.ring.style.transform = `scale(${1 + 5 * easeOut(r)})`;
+  mark.ring.style.opacity = String(r > 0 ? 1 - r : 0);
+
+  // Evidence post rises through the window.
+  const ph = easeInOut(prog(t, ...T.post));
+  mark.setPost(POST_H * ph);
+  mark.head.style.opacity = String(prog(t, T.post[0], T.post[0] + 0.1));
+  mark.head.style.transform = `scale(${0.6 + 0.4 * ph})`;
+
+  // Camera: a slow orbit that ends in the logo's isometric pose, then pulls back.
+  const orbit = easeInOut(prog(t, 0, 4.4));
+  const pull = easeInOut(prog(t, ...T.pull));
+  stage.setCamera({
+    rx: lerp(74, 52, orbit),
+    rz: lerp(10, -45, orbit) + Math.sin(t * 0.5) * 1.5,
+    z: lerp(-1000, -240, orbit) + lerp(0, -250, pull),
+    y: lerp(40, -190, pull),
+  });
+
+  // Wordmark and tagline.
+  const w = easeOut(prog(t, 4.6, 5.4));
+  title.style.opacity = String(w);
+  title.style.transform = `translateY(${lerp(40, 0, w)}px)`;
+  title.style.filter = `blur(${lerp(12, 0, w)}px)`;
+  const g = easeOut(prog(t, 5.2, 5.9));
+  tagline.style.opacity = String(g);
+  tagline.style.transform = `translateY(${lerp(20, 0, g)}px)`;
+
+  stage.overlay.style.opacity = String(easeInOut(prog(t, ...T.fade)));
+};
+
+await ready();
+window.render(0);
+window.__ready = true;
+window.__duration = T.duration;
+</script>
+</body>
+</html>

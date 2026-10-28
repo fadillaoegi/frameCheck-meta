@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+/*
+  Visual language: a night-shift proofing desk. Near-black panels, a neon
+  cutting-mat grid, crop marks around every image, and glowing proof marks
+  for the three defect categories. Cyan = the design layer, green = the
+  build. Token names stay semantic: "paper" is the page, "ink" is text.
+*/
+@theme {
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-display: "Chakra Petch", "IBM Plex Sans", sans-serif;
+
+  --color-paper: #07070e;
+  --color-paper-2: #121222;
+  --color-sheet: #0d0d1a;
+  --color-ink: #ecebff;
+  --color-ink-2: #b6b4dc;
+  --color-ink-3: #7c7aa8;
+  --color-line: #24243f;
+  --color-line-2: #36365e;
+
+  --color-neon: #00f0ff;
+  --color-neon-2: #ff2bd6;
+
+  --color-design: #00e1ff;
+  --color-build: #3dff9e;
+
+  --color-missing: #ff2e63;
+  --color-clipped: #ffb627;
+  --color-layout: #b46bff;
+
+  --color-accept: #3dff9e;
+  --color-reject: #ff5c8a;
+}
+
+html {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  color-scheme: dark;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+/* Neon cutting-mat grid under two soft city-light glows. */
+.mat {
+  background-color: var(--color-paper);
+  background-image:
+    radial-gradient(60rem 40rem at 0% 0%, rgb(255 43 214 / 0.10), transparent 60%),
+    radial-gradient(60rem 40rem at 100% 100%, rgb(0 240 255 / 0.09), transparent 60%),
+    linear-gradient(to right, rgb(0 240 255 / 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(0 240 255 / 0.07) 1px, transparent 1px),
+    linear-gradient(to right, rgb(0 240 255 / 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(0 240 255 / 0.025) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px, 8px 8px, 8px 8px;
+}
+
+/* Faint CRT scanlines over everything; purely decorative. */
+.mat::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  background: repeating-linear-gradient(to bottom, rgb(255 255 255 / 0.018) 0 1px, transparent 1px 3px);
+}
+
+/* Panel edge: a hairline highlight plus a deep drop, so panels float on the grid. */
+.sheet-shadow {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.04),
+    0 0 0 1px rgb(0 240 255 / 0.03),
+    0 18px 40px -18px rgb(0 0 0 / 0.9);
+}
+
+.glow {
+  box-shadow:
+    0 0 0 1px var(--color-neon),
+    0 0 14px -2px rgb(0 240 255 / 0.7),
+    0 0 40px -10px rgb(0 240 255 / 0.6);
+}
+
+.text-glow {
+  text-shadow: 0 0 14px currentColor;
+}
+
+.checker {
+  background-color: #0e0e1c;
+  background-image: repeating-conic-gradient(#16162a 0 25%, #0e0e1c 0 50%);
+  background-size: 16px 16px;
+}
+
+@keyframes scan {
+  0% { transform: translateY(-10%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(1000%); opacity: 0; }
+}
+
+.scanline {
+  animation: scan 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes mark-in {
+  from { transform: scale(1.25); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.mark-in {
+  animation: mark-in 320ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.55; }
+  94% { opacity: 1; }
+  96% { opacity: 0.75; }
+  97% { opacity: 1; }
+}
+
+/* A neon sign's occasional flicker, used once on the hero word. */
+.flicker {
+  animation: flicker 5s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}
